@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM symbooglix/user_base:ase15
 MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 
 # Add PPA for Z3 4.3.1
@@ -15,10 +15,7 @@ RUN apt-get -y --no-install-recommends install mercurial ca-certificates vim
 # FIXME: This pulls in lots of depdencies, not sure we need them all
 RUN apt-get -y install cabal-install
 
-RUN useradd -m ase
-USER ase
-WORKDIR /home/ase
-
+WORKDIR /home/${CONTAINER_USER}
 
 # Build haskell Z3 bindings
 RUN hg clone https://bitbucket.org/wests/z3-haskell && \
@@ -30,8 +27,8 @@ RUN hg clone https://bitbucket.org/wests/z3-haskell && \
 # Boogaloo's dependencies
 # FIXME: Z3's haskell bindings warn against using mtl-2.1
 #        we should fix Boogaloo's dependencies instead
-ADD hack_mtl_version.patch /home/ase/z3-haskell/
-RUN cd /home/ase/z3-haskell/ && \
+ADD hack_mtl_version.patch /home/${CONTAINER_USER}/z3-haskell/
+RUN cd z3-haskell/ && \
     hg update 223ff74eb1a33ef2e7af877bb463c443a73c500d && \
     hg import --no-commit hack_mtl_version.patch && \
     cabal install
@@ -44,11 +41,11 @@ RUN hg clone https://bitbucket.org/nadiapolikarpova/boogaloo && \
 
 # This patch is based on f8ac7985ff661278435c9cabc5ca5dce749c50bb
 # but with the Z3 changes removed because they cause segfaults
-ADD builtin_attribute_boogaloo.patch /home/ase/boogaloo/
+ADD builtin_attribute_boogaloo.patch /home/${CONTAINER_USER}/boogaloo/
 
 # This patch is straight from the boogaloo repo and it fixes a bug handling
 # functions with nameless arguments
-ADD c11cc364a7f60baa36bfb77a39733a7a3957a692.patch /home/ase/boogaloo/
+ADD c11cc364a7f60baa36bfb77a39733a7a3957a692.patch /home/${CONTAINER_USER}/boogaloo/
 
 RUN cd boogaloo/ && \
     hg import --no-commit builtin_attribute_boogaloo.patch c11cc364a7f60baa36bfb77a39733a7a3957a692.patch && \
@@ -60,4 +57,4 @@ RUN cd boogaloo && \
     ./Tests
 
 # Put Boogaloo in PATH
-RUN echo 'PATH=/home/ase/.cabal/bin:$PATH' >> ~/.bashrc
+RUN echo 'PATH=/home/'${CONTAINER_USER}'/.cabal/bin:$PATH' >> ~/.bashrc

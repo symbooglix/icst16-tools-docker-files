@@ -18,13 +18,15 @@ RUN git clone https://github.com/boogie-org/boogie.git && \
 
 # Unfortunately we can't do a shallow clone because we need
 # to check out a particular revision
+# NOTE: The clone sometimes fails. I think this is a codeplex issue
 RUN git clone https://git.codeplex.com/corral && \
     cd corral/ && \
     git checkout ${CORRAL_REVISION} && \
     cp ~/boogie/Binaries/*.dll references/ && \
     cp ~/boogie/Binaries/*.mdb references/ && \
     xbuild /p:Configuration=Release cba.sln && \
-    ln -s /usr/bin/z3 /home/ase/corral/bin/Release/z3.exe
+    ln -s /usr/bin/z3 /home/${CONTAINER_USER}/corral/bin/Release/z3.exe
 
 # Put corral.exe in the user's PATH
-RUN echo 'export PATH=$PATH:/home/ase/corral/bin/Release' >> /home/ase/.bashrc
+RUN echo 'export PATH=$PATH:/home/${CONTAINER_USER}/corral/bin/Release' >> \
+    /home/${CONTAINER_USER}/.bashrc

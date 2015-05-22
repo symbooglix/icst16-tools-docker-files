@@ -1,5 +1,5 @@
 # vim: set sw=2 ts=2 softtabstop=2 expandtab:
-FROM ubuntu:14.04
+FROM symbooglix/user_base:ase15
 MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 
 # Get Mono 3.12.1 . Perhaps we should build it ourselves
@@ -20,13 +20,5 @@ RUN apt-get -y install mono-devel z3=4.3.2-0~trusty1
 
 RUN apt-get -y install --no-install-recommends git
 
-# Create ``ase`` user for container with password ``ase``.
-# Give it sudo access so it possible to install new packages inside the container.
-# NEVER EVER EVER EVER USE THIS CONTAINER IN PRODUCTION DUE HOW EASY IT IS
-# TO GET ROOT PRIVILIDGES WITH THE ``ase`` USER!
-RUN useradd -m ase && \
-    echo ase:ase | chpasswd && \
-    echo 'ase  ALL=(root) ALL' >> /etc/sudoers
-
-WORKDIR /home/ase/
-USER ase
+WORKDIR /home/${CONTAINER_USER}/
+USER ${CONTAINER_USER}

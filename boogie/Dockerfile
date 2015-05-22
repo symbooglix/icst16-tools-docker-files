@@ -15,4 +15,5 @@ RUN git clone https://github.com/boogie-org/boogie.git && \
     ln -s /usr/bin/z3 Binaries/z3.exe
 
 # Put Boogie.exe in the user's PATH
-RUN echo 'export PATH=$PATH:/home/ase/boogie/Binaries' >> /home/ase/.bashrc
+RUN echo 'export PATH=$PATH:/home/${CONTAINER_USER}/boogie/Binaries' >> \
+    /home/${CONTAINER_USER}/.bashrc

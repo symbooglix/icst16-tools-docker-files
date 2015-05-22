@@ -30,7 +30,7 @@ RUN apt-get -y --no-install-recommends install python python-dev python-pip && \
 # Install Other tools needed for build
 RUN apt-get -y --no-install-recommends install cmake zlib1g-dev zlib1g mercurial git subversion make libedit-dev vim
 
-USER ase
+USER ${CONTAINER_USER}
 
 # Build Bugle
 RUN mkdir bugle && cd bugle && mkdir build && \
@@ -46,7 +46,7 @@ RUN mkdir libclc && \
     mkdir install && \
     svn co -r ${LIBCLC_REV} ${LIBCLC_SVN_URL} srcbuild && \
     cd srcbuild && \
-    ./configure.py --with-llvm-config=/usr/bin/llvm-config-3.5 --prefix=/home/ase/libclc/install nvptx-- nvptx64-- && \
+    ./configure.py --with-llvm-config=/usr/bin/llvm-config-3.5 --prefix=/home/${CONTAINER_USER}/libclc/install nvptx-- nvptx64-- && \
     make && \
     make install
 
@@ -57,8 +57,9 @@ RUN hg clone https://hg.codeplex.com/gpuverify && \
     xbuild GPUVerify.sln && \
     ln -s /usr/bin/z3 Binaries/z3.exe
 
-# Copy gvfindtoo.py from context
-ADD gvfindtools.py /home/ase/gpuverify/
+# Copy gvfindtools.py from context
+ADD gvfindtools.py /home/${CONTAINER_USER}/gpuverify/
 
 # Put GPUVerify in PATH
-RUN echo 'PATH=/home/ase/gpuverify:$PATH' >> /home/ase/.bashrc
+RUN echo 'PATH=/home/${CONTAINER_USER}/gpuverify:$PATH' >> \
+    /home/${CONTAINER_USER}/.bashrc
