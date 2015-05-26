@@ -10,12 +10,20 @@ RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C504E590 && \
 RUN apt-get -y install z3=4.3.1-0~trusty1
 
 # Mercurial and a proper text editor
+# HACK: Mercurial depends on older python and we inherit python3
+RUN update-alternatives --remove-all python
 RUN apt-get -y --no-install-recommends install mercurial ca-certificates vim
 
 # FIXME: This pulls in lots of depdencies, not sure we need them all
 RUN apt-get -y install cabal-install
 
 WORKDIR /home/${CONTAINER_USER}
+
+# Add boogie-runner configs for boogaloo
+ADD boogaloo-8.yml /home/${CONTAINER_USER}/
+ADD boogaloo-nobound.yml /home/${CONTAINER_USER}/
+RUN chown ${CONTAINER_USER}: boogaloo-8.yml boogaloo-nobound.yml
+USER ${CONTAINER_USER}
 
 # Build haskell Z3 bindings
 RUN hg clone https://bitbucket.org/wests/z3-haskell && \
@@ -58,3 +66,8 @@ RUN cd boogaloo && \
 
 # Put Boogaloo in PATH
 RUN echo 'PATH=/home/'${CONTAINER_USER}'/.cabal/bin:$PATH' >> ~/.bashrc
+
+# HACK: Set python3 to be default again
+USER root
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+USER ${CONTAINER_USER}

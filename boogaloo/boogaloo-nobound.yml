@@ -1,0 +1,22 @@
+# vim: set sw=2 ts=2 softtabstop=2 expandtab:
+runner: Boogaloo
+runner_config:
+  # Must use this mode for bound detection to work
+  mode: "exec"
+  tool_path: "~/.cabal/bin/boogaloo"
+  max_memory: 10240 # 10 GiB
+  max_time: 900
+  additional_args:
+    - "--format=Plain"
+    - "--exec=-1" # Unbounded number of executions to consider
+    - "--rec-max=-1" # Unbounded
+    - "--loop-max=-1" # Unbounded
+    - "--out=1" # Look for at most one fault
+    - "--concretize=False" # Do not concretize, otherwise we can easily miss bugs
+    - "--minimize=False" # Do not minimize test cases, we're not interested in them and computing them wastes time
+    # Don't show passing executions. We are only interested in the following cases
+    # - bug found
+    # - bound hit
+    # - program fully explored
+    - "--pass=False"
+  entry_point: "main"
