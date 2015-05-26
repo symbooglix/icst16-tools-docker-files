@@ -1,0 +1,10 @@
+# vim: set sw=2 ts=2 softtabstop=2 expandtab:
+runner: Corral
+runner_config:
+  tool_path: "~/corral/bin/Release/corral.exe"
+  max_memory: 10240 # 10 GiB
+  max_time: 900
+  entry_point:
+    use_bool_attribute: "kernel"
+  additional_args:
+    - "/recursionBound:64"

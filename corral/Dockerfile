@@ -5,6 +5,11 @@ MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 ENV CORRAL_REVISION=3aa62d7425b57295f698c6f47d3ce1910f5f5f8d \
     BOOGIE_REVISION=1550a8112d172a37a168b048b5c78642bc39bf90
 
+ADD *.yml /home/${CONTAINER_USER}/
+USER root
+RUN chown ${CONTAINER_USER}: *.yml
+USER ${CONTAINER_USER}
+
 # Get Boogie
 # Unfortunately we can't do a shallow clone because we need
 # to check out a particular revision
