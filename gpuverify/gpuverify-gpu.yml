@@ -1,0 +1,13 @@
+# vim: set sw=2 ts=2 softtabstop=2 expandtab:
+runner: GPUVerify
+runner_config:
+  tool_path: "~/gpuverify/GPUVerify.py"
+  max_memory: 10240 # 10 GiB
+  max_time: 900
+  # Entry point is ignored by the runner so don't set it
+  additional_args:
+  - "--verbose"
+  # GPUVerify tries to create temporary files in the same directory as
+  # the input file which can lead to races if running multiple runners.
+  # This option avoids this issue
+  copy_program_to_working_directory: true

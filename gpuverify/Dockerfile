@@ -6,12 +6,20 @@ ENV BUGLE_REV=4ce4749e8c70d3640cfc4c172bd86230f906bd42 \
     LIBCLC_SVN_URL=http://llvm.org/svn/llvm-project/libclc/branches/release_35 \
     GPUVERIFY_REV=a41506612b9a742e6aabfcb213c86732aafd70ef
 
+ADD gpuverify-gpu.yml /home/${CONTAINER_USER}/
+
 USER root
+RUN chown ${CONTAINER_USER}: gpuverify-gpu.yml
+
+# HACK: python3 conflicts with python that gets installed when we install LLVM
+RUN update-alternatives --remove-all python
+
 # Get keys, add repos and update apt-cache
 RUN apt-get update && apt-get -y install wget && \
     wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|apt-key add - && \
     echo 'deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.5 main' > /etc/apt/sources.list.d/llvm.list && \
     apt-get update
+
 
 # Setup LLVM, Clang 3.5
 RUN apt-get -y install llvm-3.5 llvm-3.5-dev llvm-3.5-tools clang-3.5 libclang-3.5-dev && \
@@ -60,3 +68,8 @@ ADD gvfindtools.py /home/${CONTAINER_USER}/gpuverify/
 # Put GPUVerify in PATH
 RUN echo 'PATH=/home/${CONTAINER_USER}/gpuverify:$PATH' >> \
     /home/${CONTAINER_USER}/.bashrc
+
+# HACK: Set python3 to be default again
+USER root
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+USER ${CONTAINER_USER}
