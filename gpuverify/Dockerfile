@@ -22,10 +22,7 @@ RUN apt-get -y install llvm-3.5 llvm-3.5-dev llvm-3.5-tools clang-3.5 libclang-3
     update-alternatives --install /usr/bin/opt opt /usr/bin/opt-3.5 50 && \
     update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-3.5 50
 
-# Setup Python
-RUN apt-get -y --no-install-recommends install python python-dev python-pip && \
-    ln -s /usr/bin/clang /usr/bin/x86_64-linux-gnu-gcc && \
-    pip install psutil
+# Don't need to setup Python. We inherit from mono_z3_base
 
 # Install Other tools needed for build
 RUN apt-get -y --no-install-recommends install cmake zlib1g-dev zlib1g mercurial git subversion make libedit-dev vim

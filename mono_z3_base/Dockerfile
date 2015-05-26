@@ -18,7 +18,5 @@ RUN apt-get update && apt-get -y install wget && \
 # FIXME: This is overkill, we don't need everything from mono
 RUN apt-get -y install mono-devel z3=4.3.2-0~trusty1
 
-RUN apt-get -y install --no-install-recommends git
-
 WORKDIR /home/${CONTAINER_USER}/
 USER ${CONTAINER_USER}
