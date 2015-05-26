@@ -4,6 +4,11 @@ MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 
 ENV BOOGIE_REVISION=fde61624bc8b47a947d0da8a76632e8b8aeaacb6
 
+ADD boogie-gpu.yml boogie-svcomp.yml /home/${CONTAINER_USER}/
+USER root
+RUN chown ${CONTAINER_USER}: boogie-gpu.yml boogie-svcomp.yml
+USER ${CONTAINER_USER}
+
 # Unfortunately we can't do a shallow clone because we need
 # to check out a particular revision
 RUN git clone https://github.com/boogie-org/boogie.git && \

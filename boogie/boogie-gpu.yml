@@ -1,0 +1,11 @@
+# vim: set sw=2 ts=2 softtabstop=2 expandtab:
+runner: Boogie
+runner_config:
+  tool_path: "~/boogie/Binaries/Boogie.exe"
+  max_memory: 10240 # 10 GiB
+  max_time: 900
+  entry_point:
+    use_bool_attribute: "kernel"
+  additional_args:
+   - "-doModSetAnalysis"
+   - "-errorLimit:1"
