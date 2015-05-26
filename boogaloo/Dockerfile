@@ -20,9 +20,8 @@ RUN apt-get -y install cabal-install
 WORKDIR /home/${CONTAINER_USER}
 
 # Add boogie-runner configs for boogaloo
-ADD boogaloo-8.yml /home/${CONTAINER_USER}/
-ADD boogaloo-nobound.yml /home/${CONTAINER_USER}/
-RUN chown ${CONTAINER_USER}: boogaloo-8.yml boogaloo-nobound.yml
+ADD *.yml /home/${CONTAINER_USER}/
+RUN chown ${CONTAINER_USER}: *.yml
 USER ${CONTAINER_USER}
 
 # Build haskell Z3 bindings
