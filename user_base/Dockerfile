@@ -2,13 +2,13 @@
 FROM ubuntu:14.04
 MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 
-ENV CONTAINER_USER=ase \
+ENV CONTAINER_USER=icst \
     BOOGIE_RUNNER_REVISION=9be74e6e12bac25befa0f4fb13ced040754b702a
 
-# Create ``ase`` user for container with password ``ase``.
+# Create ``icst`` user for container with password ``icst``.
 # Give it sudo access so it possible to install new packages inside the container.
 # NEVER EVER EVER EVER USE THIS CONTAINER IN PRODUCTION DUE HOW EASY IT IS
-# TO GET ROOT PRIVILIDGES WITH THE ``ase`` USER!
+# TO GET ROOT PRIVILIDGES WITH THE ``icst`` USER!
 RUN useradd -m ${CONTAINER_USER} && \
     echo ${CONTAINER_USER}:${CONTAINER_USER} | chpasswd && \
     echo "${CONTAINER_USER}  ALL=(root) ALL" >> /etc/sudoers

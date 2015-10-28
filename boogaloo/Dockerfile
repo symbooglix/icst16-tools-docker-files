@@ -1,4 +1,4 @@
-FROM symbooglix/user_base:ase15
+FROM symbooglix/user_base:icst16
 MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 
 # Add PPA for Z3 4.3.1

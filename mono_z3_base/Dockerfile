@@ -1,5 +1,5 @@
 # vim: set sw=2 ts=2 softtabstop=2 expandtab:
-FROM symbooglix/user_base:ase15
+FROM symbooglix/user_base:icst16
 MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 
 # Get Mono 3.12.1 . Perhaps we should build it ourselves

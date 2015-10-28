@@ -1,4 +1,4 @@
-FROM symbooglix/mono_z3_base:ase15
+FROM symbooglix/mono_z3_base:icst16
 MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 
 ENV BUGLE_REV=4ce4749e8c70d3640cfc4c172bd86230f906bd42 \

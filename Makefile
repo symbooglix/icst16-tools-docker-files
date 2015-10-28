@@ -1,5 +1,5 @@
 NAMESPACE=symbooglix
-TAG=:ase15
+TAG=:icst16
 
 all:: corral boogie gpuverify boogaloo
 

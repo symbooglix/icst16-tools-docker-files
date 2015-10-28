@@ -17,7 +17,7 @@ import sys
 # rootDir = r"c:\projects\gpuverify"
 # bugleSrcDir = rootDir + r"\bugle\src"
 
-rootDir = "/home/ase/"
+rootDir = "/home/icst/"
 
 # The path to the Bugle Source directory.
 # The include-blang/ folder should be there

@@ -1,5 +1,5 @@
 # vim: set sw=2 ts=2 softtabstop=2 expandtab:
-FROM symbooglix/mono_z3_base:ase15
+FROM symbooglix/mono_z3_base:icst16
 MAINTAINER Dan Liew <daniel.liew@imperial.ac.uk>
 
 ENV BOOGIE_REVISION=fde61624bc8b47a947d0da8a76632e8b8aeaacb6
