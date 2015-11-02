@@ -22,3 +22,6 @@ mono_z3_base: mono_z3_base/Dockerfile user_base
 
 user_base: user_base/Dockerfile
 	docker build -t $(NAMESPACE)/$@$(TAG) --file $< user_base/
+
+symbooglix: symbooglix/Dockerfile mono_z3_base
+	docker build -t $(NAMESPACE)/$@$(TAG) --file $< symbooglix/
